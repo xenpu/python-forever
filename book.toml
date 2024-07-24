@@ -1,0 +1,6 @@
+[book]
+authors = ["Alexander Pulichkin"]
+language = "ru"
+multilingual = true
+src = "src"
+title = "Python - Forever!"
