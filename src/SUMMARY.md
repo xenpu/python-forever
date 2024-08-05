@@ -9,7 +9,7 @@
     - [Списки. Часть 1](basics/lists_1.md)
     - [Списки. Часть 2](basics/lists_2.md)
 # Дополнения
-  [модуль itertools](./itertools/itertools.md)
+- [модуль itertools](itertools/itertools.md)
 
 -----------
 

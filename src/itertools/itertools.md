@@ -16,14 +16,14 @@
 Итак, всякий раз, когда у нас есть два или более независимых вложенных цикла for, как показано ниже:
 ```python
 for x in range(width):
-        for y in range(height):
-            # Do stuff...
+    for y in range(height):
+        # Do stuff...
 ```
 Мы можем преобразовать их в единый цикл, если будем использовать product:
 ```python
-    from itertools import product
-    for x, y in product(range(width), range(height)):
-        # Do stuff...
+from itertools import product
+for x, y in product(range(width), range(height)):
+    # Do stuff...
 ```
 Плоская структура предоставляет вам больше горизонтального пространства для написания кода и упрощает управление выходом из цикла.
 
@@ -34,42 +34,42 @@ for x in range(width):
 
 Рассмотрим этот фрагмент кода, который объединяет два списка, чтобы мы могли пройтись по ним:
 ```python
-    # Типичный случай
-    first_list = [...]
-    second_list = [...]
-    full_list = first_list + second_list  # + third_list + ...
-    for element in full_list:
-        # Do stuff...
+# Типичный случай
+first_list = [...]
+second_list = [...]
+full_list = first_list + second_list  # + third_list + ...
+for element in full_list:
+    # Do stuff...
 ```
 Используя цепочку, нам не понадобилось бы сложение:
 ```python
-    # Using chain
-    from itertools import chain
-    first_list = [...]
-    second_list = [...]
-    for element in chain(first_list, second_list):  # Можно использовать больше итерируемых объектов
-        # Do stuff...
+# Using chain
+from itertools import chain
+first_list = [...]
+second_list = [...]
+for element in chain(first_list, second_list):  # Можно использовать больше итерируемых объектов
+    # Do stuff...
 ```
 Это также работает в ситуациях, когда вы не можете объединить повторяющиеся переменные:
 ```python
-    first_gen = (x ** 2  for x in  range(3))
-    second_gen = (x ** 3  for x in  range(3)) # first_gen + second_gen # TypeError!
-    for value in chain(first_gen, second_gen):
-        print(value, end=" ") # 0 1 4 0 1 8
+first_gen = (x ** 2  for x in  range(3))
+second_gen = (x ** 3  for x in  range(3)) # first_gen + second_gen # TypeError!
+for value in chain(first_gen, second_gen):
+    print(value, end=" ") # 0 1 4 0 1 8
 ```
 Возможно, вы также подумали о том, что можно просто использовать встроенный *list* в gen1 и gen2, чтобы преобразовать их в списки, а затем объединить списки. Это верно, но обычно это пустая трата ресурсов и не будет работать с бесконечными итераторами.
 
 Итератор *chain* также предоставляет вспомогательный конструктор, называемый *chain.from_iterable*, который, как бы сглаживает итерацию. Типичным вариантом использования было бы сделать плоскую структуру списка списков:
 ```python
-    nested = [[1, 2, 3], [4], [], [5, 6]]
-    flat = list(chain.from_iterable(nested))
-    print(flat)  # [1, 2, 3, 4, 5, 6]
+nested = [[1, 2, 3], [4], [], [5, 6]]
+flat = list(chain.from_iterable(nested))
+print(flat)  # [1, 2, 3, 4, 5, 6]
 ```
 Прелесть chain.from_iterable в том, что вам даже не нужно преобразовывать конечный результат в список, если все, что вы хотите, - это пройтись по элементам:
 ```python
-    nested = [[1, 2, 3], [4], [], [5, 6]]
-    for value in chain.from_iterable(nested):
-        print(value, end=" ")  # 1 2 3 4 5 6
+nested = [[1, 2, 3], [4], [], [5, 6]]
+for value in chain.from_iterable(nested):
+    print(value, end=" ")  # 1 2 3 4 5 6
 ```
 **pairwise** - создаёт перекрывающиеся пары последовательных элементов
 Итератор pairwise принимает любой итерируемый объект и создаёт перекрывающиеся пары последовательных элементов.
@@ -82,15 +82,15 @@ for x in range(width):
 
 Общий шаблон, который заменяет *pairwise*, следующий:
 ```python
-    names = ["Harry", "Anne", "George"]
+names = ["Harry", "Anne", "George"]
 
-    for left, right in zip(names[:-1], names[1:]):
-        print(f"{left} says hi to {right}")
+for left, right in zip(names[:-1], names[1:]):
+    print(f"{left} says hi to {right}")
 
-    """Output:
-    Harry says hi to Anne
-    Anne says hi to George
-    """
+"""Output:
+Harry says hi to Anne
+Anne says hi to George
+"""
 ```
 При использовании *pairwise* вам не понадобится ни *zip*, ни слайсинг:
 ```python
